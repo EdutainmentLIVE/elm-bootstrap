@@ -1,6 +1,7 @@
 module Bootstrap.Tab
     exposing
         ( view
+        , viewWithAction
         , config
         , items
         , withAnimation
@@ -78,7 +79,7 @@ module Bootstrap.Tab
 
 
 # Tabs
-@docs view, config, items, initialState, customInitialState, Config, State
+@docs view, viewWithAction, config, items, initialState, customInitialState, Config, State
 
 # Options
 @docs pills, withAnimation, justified, fill, center, right, attrs, useHash, Option
@@ -367,6 +368,9 @@ view state ((Config { items }) as config) =
                 ]
 
 
+{-| Creates a tab control which keeps track of the selected tab item and displays the corresponding
+tab pane for you, plus runs `action` when the tab is selected
+-}
 viewWithAction : State -> Config msg -> (String -> msg -> msg) -> Html.Html msg
 viewWithAction state ((Config { items }) as config) action =
     case getActiveItem state config of
