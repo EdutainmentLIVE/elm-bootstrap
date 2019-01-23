@@ -1,21 +1,10 @@
-module Bootstrap.Form
-    exposing
-        ( form
-        , formInline
-        , group
-        , label
-        , row
-        , col
-        , colLabel
-        , colLabelSm
-        , colLabelLg
-        , help
-        , helpInline
-        , validFeedback
-        , invalidFeedback
-        , Col
-        , Option
-        )
+module Bootstrap.Form exposing
+    ( form, formInline
+    , group, label, Option, attrs
+    , row, col, colLabel, colLabelSm, colLabelLg, Col
+    , validFeedback, invalidFeedback
+    , help, helpInline
+    )
 
 {-| Bootstrap provides several form control styles, layout options, and custom components for creating a wide variety of forms.
 
@@ -29,7 +18,7 @@ module Bootstrap.Form
 
 Use form groups to group items together (label + input is a typical simple example)
 
-@docs group, label, Option
+@docs group, label, Option, attrs
 
 
 # Grid layouts
@@ -48,11 +37,11 @@ Use form groups to group items together (label + input is a typical simple examp
 
 -}
 
-import Html
-import Html.Attributes as Attributes
-import Bootstrap.Grid.Row as Row
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Internal as GridInternal
+import Bootstrap.Grid.Row as Row
+import Html
+import Html.Attributes as Attributes
 
 
 {-| Opaque type representing a column in a form row
@@ -63,6 +52,7 @@ type Col msg
         , options : List (Col.Option msg)
         , children : List (Html.Html msg)
         }
+
 
 {-| Opaque type representing options for customing form groups.
 -}
@@ -170,8 +160,8 @@ toAttributes modifiers =
         options =
             List.foldl applyModifier defaultOptions modifiers
     in
-        [ Attributes.class "form-group" ]
-            ++ options.attributes
+    [ Attributes.class "form-group" ]
+        ++ options.attributes
 
 
 defaultOptions : Options msg
@@ -183,8 +173,16 @@ defaultOptions =
 applyModifier : Option msg -> Options msg -> Options msg
 applyModifier modifier options =
     case modifier of
-        Attrs attrs ->
-            { options | attributes = options.attributes ++ attrs }
+        Attrs value ->
+            { options | attributes = options.attributes ++ value }
+
+
+{-| Use this function to handle any Html.Attribute option you wish for your form
+group.
+-}
+attrs : List (Html.Attribute msg) -> Option msg
+attrs =
+    Attrs
 
 
 

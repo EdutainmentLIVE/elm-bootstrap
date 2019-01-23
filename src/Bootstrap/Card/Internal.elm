@@ -1,11 +1,10 @@
-module Bootstrap.Card.Internal exposing (..)
+module Bootstrap.Card.Internal exposing (BlockItem(..), BlockOption(..), BlockOptions, CardBlock(..), CardOption(..), CardOptions, RoleOption(..), applyBlockModifier, applyModifier, block, blockAttributes, cardAttributes, defaultBlockOptions, defaultOptions, listGroup, customListGroup, renderBlock, renderBlocks)
 
-import Html
-import Html.Attributes exposing (class)
-import Bootstrap.Internal.Text as Text
 import Bootstrap.Internal.ListGroup as ListGroup
 import Bootstrap.Internal.Role as Role
-
+import Bootstrap.Internal.Text as Text
+import Html
+import Html.Attributes exposing (class)
 
 
 type CardOption msg
@@ -18,8 +17,6 @@ type CardOption msg
 type RoleOption
     = Roled Role.Role
     | Outlined Role.Role
-
-
 
 
 type alias CardOptions msg =
@@ -57,8 +54,8 @@ type BlockItem msg
 renderBlocks : List (CardBlock msg) -> List (Html.Html msg)
 renderBlocks blocks =
     List.map
-        (\block ->
-            case block of
+        (\block_ ->
+            case block_ of
                 CardBlock e ->
                     e
 
@@ -69,8 +66,8 @@ renderBlocks blocks =
 
 
 renderBlock : CardBlock msg -> Html.Html msg
-renderBlock block =
-    case block of
+renderBlock block_ =
+    case block_ of
         CardBlock e ->
             e
 
@@ -94,6 +91,14 @@ listGroup items =
     Html.ul
         [ class "list-group list-group-flush" ]
         (List.map ListGroup.renderItem items)
+        |> ListGroup
+
+
+customListGroup : List (ListGroup.CustomItem msg) -> CardBlock msg
+customListGroup items =
+    Html.ul
+        [ class "list-group list-group-flush" ]
+        (List.map ListGroup.renderCustomItem items)
         |> ListGroup
 
 
