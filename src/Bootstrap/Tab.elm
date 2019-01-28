@@ -52,6 +52,7 @@ module Bootstrap.Tab exposing
 
 
 # Tabs
+
 @docs view, view_, config, items, initialState, customInitialState, Config, State
 
 
@@ -369,10 +370,11 @@ view state (Config configRec) =
             , link = Tab.link [] [ text tag.name ]
             , pane = Tab.pane [] [ renderThings things tag ]
             }
+
 -}
-view_ : State -> ConfigRec msg -> (String -> State -> msg) -> Html.Html msg
-view_ state configRec strToMsg =
-    case (getActiveItem state configRec) of
+view_ : State -> Config msg -> (String -> State -> msg) -> Html.Html msg
+view_ state (Config configRec) strToMsg =
+    case getActiveItem state configRec of
         Nothing ->
             Html.div []
                 [ Html.ul (tabAttributes configRec) []
@@ -396,6 +398,7 @@ view_ state configRec strToMsg =
                         configRec.items
                     )
                 ]
+
 
 getActiveItem : State -> ConfigRec msg -> Maybe (Item msg)
 getActiveItem (State { activeTab }) configRec =
@@ -459,6 +462,7 @@ renderLink id active (Link { attributes, children }) configRec =
         [ class "nav-item" ]
         [ linkItem ]
 
+
 renderLink_ :
     String
     -> Bool
@@ -477,14 +481,17 @@ renderLink_ id active (Link { attributes, children }) configRec strToMsg =
              , href <| "#" ++ id
              , custom
                 "click"
-                <| Json.succeed { message = strToMsg id <|
-                        State
-                            { activeTab = Just id
-                            , visibility = visibilityTransition (configRec.withAnimation && not active) Hidden
-                            }
-                , stopPropagation = False
-                , preventDefault = active || not configRec.useHash
-                }
+               <|
+                Json.succeed
+                    { message =
+                        strToMsg id <|
+                            State
+                                { activeTab = Just id
+                                , visibility = visibilityTransition (configRec.withAnimation && not active) Hidden
+                                }
+                    , stopPropagation = False
+                    , preventDefault = active || not configRec.useHash
+                    }
              ]
                 ++ attributes
             )
