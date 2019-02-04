@@ -471,32 +471,41 @@ renderLink_ :
     -> (String -> State -> msg)
     -> Html.Html msg
 renderLink_ id active (Link { attributes, children }) configRec strToMsg =
+    let
+        commonClasses =
+            [ ( "nav-link", True ), ( "active", active ) ]
+
+        clickHandler =
+            onClick <|
+                strToMsg id <|
+                    State
+                        { activeTab = Just id
+                        , visibility = visibilityTransition (configRec.withAnimation && not active) Hidden
+                        }
+
+        linkItem =
+            if configRec.useHash then
+                Html.a
+                    ([ classList commonClasses
+                     , clickHandler
+                     , href <| "#" ++ id
+                     ]
+                        ++ attributes
+                    )
+                    children
+
+            else
+                Html.button
+                    ([ classList <| commonClasses ++ [ ( "btn", True ), ( "btn-link", True ) ]
+                     , clickHandler
+                     ]
+                        ++ attributes
+                    )
+                    children
+    in
     Html.li
         [ class "nav-item" ]
-        [ Html.a
-            ([ classList
-                [ ( "nav-link", True )
-                , ( "active", active )
-                ]
-             , href <| "#" ++ id
-             , custom
-                "click"
-               <|
-                Json.succeed
-                    { message =
-                        strToMsg id <|
-                            State
-                                { activeTab = Just id
-                                , visibility = visibilityTransition (configRec.withAnimation && not active) Hidden
-                                }
-                    , stopPropagation = False
-                    , preventDefault = active || not configRec.useHash
-                    }
-             ]
-                ++ attributes
-            )
-            children
-        ]
+        [ linkItem ]
 
 
 renderTabPane :
