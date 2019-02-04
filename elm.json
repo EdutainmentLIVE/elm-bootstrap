@@ -3,7 +3,7 @@
     "name": "EdutainmentLIVE/elm-bootstrap",
     "summary": "Elm Bootstrap is a comprehensive library for working with Twitter Bootstrap 4",
     "license": "BSD-3-Clause",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "exposed-modules": [
         "Bootstrap.Accordion",
         "Bootstrap.Alert",

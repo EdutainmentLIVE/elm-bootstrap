@@ -7,6 +7,19 @@ Elm Bootstrap is a comprehensive library package that aims to make it pleasant a
 
 Twitter Bootstrap is one of the most popular CSS (with some JS) frameworks for building responsive, mobile first web sites. Version 4 is fully embracing flexbox, which provides much better control and flexibility.
 
+## How to publish:
+Run the following commands:
+
+```
+git tag -a 1.0.0 -m "initial release"
+git push --tags
+```
+
+then:
+
+`elm publish`
+
+
 ### What's in it for me?
 
 * A reasonably type safe API for using Bootstrap
