@@ -87,7 +87,7 @@ Twitter Bootstrap also consists of a few interactive elements. The interactivety
 
 
 ## Alternatives
-- [`elm-bootstrapify`](#http://package.elm-lang.org/packages/JeremyBellows/elm-bootstrapify/latest) - Supports Bootstrap 3, not as extensive but might suit your needs.
+- [`elm-bootstrapify`](http://package.elm-lang.org/packages/JeremyBellows/elm-bootstrapify/latest) - Supports Bootstrap 3, not as extensive but might suit your needs.
 - There are a few other Bootstrap related libraries, but they haven't been updated to Elm 0.18.
 - [`elm-mdl`](https://github.com/debois/elm-mdl) is of course the most obvious alternative, if you aren't fond of Bootstrap. It's very impressive and has been a great source of inspiration for elm-bootstrap.
 
